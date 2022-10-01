@@ -9,4 +9,8 @@ export const Query = {
     if (!userInfo) return null;
     return prisma.user.findUnique({ where: { id: userInfo.userId } });
   },
+
+  profile: (_: any, { userId }: { userId: string }, { prisma }: Context) => {
+    return prisma.profile.findUnique({ where: { userId: Number(userId) } });
+  },
 };
