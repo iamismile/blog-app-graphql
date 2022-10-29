@@ -4,7 +4,7 @@ import { Mutation, Query, Profile, Post, User } from './resolvers';
 import { Prisma, PrismaClient } from '@prisma/client';
 import { getUserFromToken } from './utils/getUserFromToken';
 
-const prisma = new PrismaClient();
+export const prisma = new PrismaClient();
 
 export interface Context {
   prisma: PrismaClient<
