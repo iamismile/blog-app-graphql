@@ -5,7 +5,11 @@ interface UserParentType {
 }
 
 export const User = {
-  posts: (parent: UserParentType, __: any, { prisma, userInfo }: Context) => {
+  posts: (
+    parent: UserParentType,
+    { take, skip }: { take: number; skip: number },
+    { prisma, userInfo }: Context
+  ) => {
     const isOwnProfile = parent.id === userInfo?.userId;
 
     // If own profile show all posts
@@ -13,6 +17,8 @@ export const User = {
       return prisma.post.findMany({
         where: { authorId: parent.id },
         orderBy: [{ createdAt: 'desc' }],
+        take,
+        skip,
       });
     }
 
@@ -20,6 +26,8 @@ export const User = {
     return prisma.post.findMany({
       where: { authorId: parent.id, published: true },
       orderBy: [{ createdAt: 'desc' }],
+      take,
+      skip,
     });
   },
 };
